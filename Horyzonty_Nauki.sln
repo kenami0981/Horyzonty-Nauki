@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horyzonty_Nauki.API", "Horyzonty_Nauki.API\Horyzonty_Nauki.API.csproj", "{21AD14FE-B4D9-4038-9839-841B9E5F5A7B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21AD14FE-B4D9-4038-9839-841B9E5F5A7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21AD14FE-B4D9-4038-9839-841B9E5F5A7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21AD14FE-B4D9-4038-9839-841B9E5F5A7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21AD14FE-B4D9-4038-9839-841B9E5F5A7B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F2FBE16F-7CA0-4740-A401-853CB736A218}
+	EndGlobalSection
+EndGlobal
