@@ -15,6 +15,9 @@ namespace Horyzonty_Nauki.Infrastructure.Data
         }
 
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<Config> Configs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Article>().Property(a => a.Category).HasConversion<string>();
