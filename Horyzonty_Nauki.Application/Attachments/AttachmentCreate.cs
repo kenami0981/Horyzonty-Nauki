@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace Horyzonty_Nauki.Application.Attachments
 {
-    public class AttachmentsCreate
+    public class AttachmentCreate
     {
         public class Command : IRequest<Result<AttachmentDto>>
         {
-            public required AttachmentsCreateDto AttachmentsCreateDto { get; set; }
+            public required AttachmentCreateDto AttachmentsCreateDto { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.AttachmentsCreateDto).SetValidator(new AttachmentsValidator());
+                RuleFor(x => x.AttachmentsCreateDto).SetValidator(new AttachmentValidator());
             }
         }
 

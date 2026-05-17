@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Horyzonty_Nauki.Application.Configs
 {
-    public class ConfigsCreate
+    public class ConfigCreate
     {
         public class Command : IRequest<Result<ConfigDto>>
         {
-            public required ConfigsCreateDto ConfigsCreateDto { get; set; }
+            public required ConfigCreateDto ConfigsCreateDto { get; set; }
         }
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.ConfigsCreateDto).SetValidator(new ConfigsValidator());
+                RuleFor(x => x.ConfigsCreateDto).SetValidator(new ConfigValidator());
             }
         }
         public class Handler : IRequestHandler<Command, Result<ConfigDto>>

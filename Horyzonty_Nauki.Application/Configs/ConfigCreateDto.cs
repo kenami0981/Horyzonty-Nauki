@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Horyzonty_Nauki.Application.Configs
 {
-    public class ConfigsCreateDto
+    public class ConfigCreateDto
     {
         public Guid Id { get; set; }
         public int Issn_number { get; set; }

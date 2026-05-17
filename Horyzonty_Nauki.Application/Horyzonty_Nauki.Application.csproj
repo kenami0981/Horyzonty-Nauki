@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Configs\ConfigsDelete.cs" />
+    <None Include="Configs\ConfigDelete.cs" />
   </ItemGroup>
 
   <ItemGroup>

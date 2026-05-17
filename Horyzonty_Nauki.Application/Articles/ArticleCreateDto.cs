@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Horyzonty_Nauki.Application.Articles
 {
-    public class ArticlesCreateDto
+    public class ArticleCreateDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }

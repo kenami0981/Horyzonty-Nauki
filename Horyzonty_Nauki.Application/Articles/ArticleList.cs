@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Horyzonty_Nauki.Application.Articles
 {
-    public class ArticlesList
+    public class ArticleList
     {
         public class Query : IRequest<Result<List<ArticleDto>>> { }
 

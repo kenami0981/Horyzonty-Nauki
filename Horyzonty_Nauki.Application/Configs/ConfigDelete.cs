@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Horyzonty_Nauki.Application.Attachments
+namespace Horyzonty_Nauki.Application.Configs
 {
-    public class AttachmentsDelete
+    public class ConfigDelete
     {
         public class Command : IRequest<Result<Unit>>
         {
@@ -23,16 +23,16 @@ namespace Horyzonty_Nauki.Application.Attachments
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var attachment= await _context.Attachments.FindAsync(request.Id);
-                if (attachment== null)
+                var config = await _context.Configs.FindAsync(request.Id);
+                if (config == null)
                 {
-                    return Result<Unit>.Failure("Attachment not found");
+                    return Result<Unit>.Failure("Config not found");
                 }
-                _context.Attachments.Remove(attachment);
+                _context.Configs.Remove(config);
                 var success = await _context.SaveChangesAsync(cancellationToken) > 0;
                 if (!success)
                 {
-                    return Result<Unit>.Failure("Failed to delete the attachment");
+                    return Result<Unit>.Failure("Failed to delete the config");
                 }
                 return Result<Unit>.Success(Unit.Value);
             }

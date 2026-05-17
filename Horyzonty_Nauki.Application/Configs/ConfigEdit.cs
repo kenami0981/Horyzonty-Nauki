@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Horyzonty_Nauki.Application.Attachments;
 using Horyzonty_Nauki.Infrastructure.Data;
 using MediatR;
 using System;
@@ -7,24 +8,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Horyzonty_Nauki.Application.Articles
+namespace Horyzonty_Nauki.Application.Configs
 {
-    public class ArticlesEdit
+    public class ConfigEdit
     {
         public class Command : IRequest<Result<Unit>>
         {
             public Guid Id { get; set; }
-            public required ArticlesCreateDto ArticlesCreateDto { get; set; }
+            public required ConfigCreateDto ConfigsCreateDto { get; set; }
         }
-
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.ArticlesCreateDto).SetValidator(new ArticlesValidator());
+                RuleFor(x => x.ConfigsCreateDto).SetValidator(new ConfigValidator());
             }
         }
-
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
@@ -36,28 +35,25 @@ namespace Horyzonty_Nauki.Application.Articles
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var article = await _context.Articles.FindAsync(new object[] { request.Id }, cancellationToken);
+                var config = await _context.Configs.FindAsync(new object[] { request.Id }, cancellationToken);
 
-                if (article == null)
+                if (config == null)
                 {
-                    return Result<Unit>.Failure("Article not found");
+                    return Result<Unit>.Failure("Config not found");
                 }
+                config.Id = request.ConfigsCreateDto.Id;
+                config.Issn_number = request.ConfigsCreateDto.Issn_number;
+                config.Logo_path = request.ConfigsCreateDto.Logo_path;
 
-                article.Title = request.ArticlesCreateDto.Title;
-                article.Author = request.ArticlesCreateDto.Author;
-                article.Pages = request.ArticlesCreateDto.Pages;
-                article.PublicationDate = request.ArticlesCreateDto.PublicationDate;
-                article.Category = request.ArticlesCreateDto.Category;
-                article.OpenCount = request.ArticlesCreateDto.OpenCount;
-                article.CreatedAt = request.ArticlesCreateDto.CreatedAt;
 
 
                 var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                 if (!result)
                 {
-                    return Result<Unit>.Failure("Failed to update article (or no changes detected)");
+                    return Result<Unit>.Failure("Failed to update confgig (or no changes detected)");
                 }
+
 
                 return Result<Unit>.Success(Unit.Value);
             }

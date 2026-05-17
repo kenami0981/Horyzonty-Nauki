@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Horyzonty_Nauki.Application.Attachments
 {
-    public class AttachmentsList
+    public class AttachmentList
     {
         public class Query : IRequest<Result<List<AttachmentDto>>> { }
 

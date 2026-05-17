@@ -7,43 +7,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MediatR;
 
 namespace Horyzonty_Nauki.Application.Configs
 {
-    public class ConfigsDetails
+    public class ConfigList
     {
-        public class Query : IRequest<Result<ConfigDto>>
-        {
-            public Guid Id { get; set; }
-        }
+        public class Query : IRequest<Result<List<ConfigDto>>> { }
 
-        public class Handler : IRequestHandler<Query, Result<ConfigDto>>
+        public class Handler : IRequestHandler<Query, Result<List<ConfigDto>>>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
             {
                 _context = context;
             }
-            public async Task<Result<ConfigDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<ConfigDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var configDto = await _context.Configs
-                    .Where(b => b.Id == request.Id)
+                var result = await _context.Configs
                     .Select(b => new ConfigDto
                     {
                         Id = b.Id,
                         Issn_number = b.Issn_number,
                         Logo_path = b.Logo_path,
-
                     })
-                    .FirstOrDefaultAsync(cancellationToken);
+                    .ToListAsync(cancellationToken);
 
-                if (configDto == null)
-                {
-                    return Result<ConfigDto>.Failure("Config not found");
-                }
-
-                return Result<ConfigDto>.Success(configDto);
+                return Result<List<ConfigDto>>.Success(result);
             }
         }
     }

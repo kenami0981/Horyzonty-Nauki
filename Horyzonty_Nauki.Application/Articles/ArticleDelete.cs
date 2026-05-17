@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Horyzonty_Nauki.Application.Configs
+namespace Horyzonty_Nauki.Application.Articles
 {
-    public class ConfigsDelete
+    public class ArticleDelete
     {
         public class Command : IRequest<Result<Unit>>
         {
@@ -23,16 +23,16 @@ namespace Horyzonty_Nauki.Application.Configs
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var config = await _context.Configs.FindAsync(request.Id);
-                if (config == null)
+                var article = await _context.Articles.FindAsync(request.Id);
+                if (article== null)
                 {
-                    return Result<Unit>.Failure("Config not found");
+                    return Result<Unit>.Failure("Article not found");
                 }
-                _context.Configs.Remove(config);
+                _context.Articles.Remove(article);
                 var success = await _context.SaveChangesAsync(cancellationToken) > 0;
                 if (!success)
                 {
-                    return Result<Unit>.Failure("Failed to delete the config");
+                    return Result<Unit>.Failure("Failed to delete the article");
                 }
                 return Result<Unit>.Success(Unit.Value);
             }

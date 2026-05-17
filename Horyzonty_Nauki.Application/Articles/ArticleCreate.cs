@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace Horyzonty_Nauki.Application.Articles
 {
-    public class ArticlesCreate
+    public class ArticleCreate
     {
 
         public class Command : IRequest<Result<ArticleDto>>
         {
-            public required ArticlesCreateDto ArticlesCreateDto { get; set; }
+            public required ArticleCreateDto ArticlesCreateDto { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.ArticlesCreateDto).SetValidator(new ArticlesValidator());
+                RuleFor(x => x.ArticlesCreateDto).SetValidator(new ArticleValidator());
             }
         }
 

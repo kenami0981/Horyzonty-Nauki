@@ -22,7 +22,7 @@ namespace Horyzonty_Nauki.API.Controllers
         public async Task<ActionResult<List<Attachment>>> GetAll()
         {
 
-            var attachments = await _mediator.Send(new AttachmentsList.Query());
+            var attachments = await _mediator.Send(new AttachmentList.Query());
 
             if (attachments == null || !attachments.IsSuccess)
                 return BadRequest();
@@ -33,7 +33,7 @@ namespace Horyzonty_Nauki.API.Controllers
         [HttpGet("{id}")] 
         public async Task<ActionResult<AttachmentDto>> GetAttachment(Guid id)
         {
-            var result = await _mediator.Send(new AttachmentsDetails.Query { Id = id });
+            var result = await _mediator.Send(new AttachmentDetails.Query { Id = id });
 
             if (result == null || result.Value == null)
             {
@@ -50,9 +50,9 @@ namespace Horyzonty_Nauki.API.Controllers
         }
         //[Authorize(Roles = "Admin")]
         [HttpPut("{id}")] 
-        public async Task<IActionResult> EditAttachment(Guid id, AttachmentsCreateDto attachment)
+        public async Task<IActionResult> EditAttachment(Guid id, AttachmentCreateDto attachment)
         {
-            var command = new AttachmentsEdit.Command
+            var command = new AttachmentEdit.Command
             {
                 Id = id,
                 AttachmentsCreateDto = attachment
@@ -72,9 +72,9 @@ namespace Horyzonty_Nauki.API.Controllers
 
         //[Authorize(Roles = "Admin")]
         [HttpPost] 
-        public async Task<ActionResult> CreateAttachment(AttachmentsCreateDto attachment)
+        public async Task<ActionResult> CreateAttachment(AttachmentCreateDto attachment)
         {
-            var result = await _mediator.Send(new AttachmentsCreate.Command { AttachmentsCreateDto = attachment });
+            var result = await _mediator.Send(new AttachmentCreate.Command { AttachmentsCreateDto = attachment });
             if (result == null)
             {
                 return BadRequest();
@@ -89,7 +89,7 @@ namespace Horyzonty_Nauki.API.Controllers
         [HttpDelete("{id}")] 
         public async Task<IActionResult> DeleteAttachment(Guid id)
         {
-            var result = await _mediator.Send(new AttachmentsDelete.Command { Id = id });
+            var result = await _mediator.Send(new AttachmentDelete.Command { Id = id });
             if (result == null)
             {
                 return NotFound();

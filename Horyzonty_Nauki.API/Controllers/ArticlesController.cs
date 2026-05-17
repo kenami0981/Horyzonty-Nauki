@@ -25,7 +25,7 @@ namespace Horyzonty_Nauki.API.Controllers
         public async Task<ActionResult<List<Article>>> GetAll()
         {
 
-            var articles =  await _mediator.Send(new ArticlesList.Query());
+            var articles =  await _mediator.Send(new ArticleList.Query());
 
             if (articles == null || !articles.IsSuccess)
                 return BadRequest();
@@ -35,7 +35,7 @@ namespace Horyzonty_Nauki.API.Controllers
         [HttpGet("{id}")] 
         public async Task<ActionResult<ArticleDto>> GetArticle(Guid id)
         {
-            var result = await _mediator.Send(new ArticlesDetails.Query { Id = id });
+            var result = await _mediator.Send(new ArticleDetails.Query { Id = id });
 
             if (result == null || result.Value == null)
             {
@@ -53,9 +53,9 @@ namespace Horyzonty_Nauki.API.Controllers
 
         //[Authorize(Roles = "Admin")]
         [HttpPut("{id}")] 
-        public async Task<IActionResult> EditArticle(Guid id, ArticlesCreateDto article)
+        public async Task<IActionResult> EditArticle(Guid id, ArticleCreateDto article)
         {
-            var command = new ArticlesEdit.Command
+            var command = new ArticleEdit.Command
             {
                 Id = id,
                 ArticlesCreateDto = article
@@ -75,9 +75,9 @@ namespace Horyzonty_Nauki.API.Controllers
 
         //[Authorize(Roles = "Admin")]
         [HttpPost] 
-        public async Task<ActionResult> CreateArticle(ArticlesCreateDto article)
+        public async Task<ActionResult> CreateArticle(ArticleCreateDto article)
         {
-            var result = await _mediator.Send(new ArticlesCreate.Command { ArticlesCreateDto = article });
+            var result = await _mediator.Send(new ArticleCreate.Command { ArticlesCreateDto = article });
             if (result == null)
             {
                 return BadRequest();
@@ -92,7 +92,7 @@ namespace Horyzonty_Nauki.API.Controllers
         [HttpDelete("{id}")] 
         public async Task<IActionResult> DeleteArticle(Guid id)
         {
-            var result = await _mediator.Send(new ArticlesDelete.Command { Id = id });
+            var result = await _mediator.Send(new ArticleDelete.Command { Id = id });
             if (result == null)
             {
                 return NotFound();

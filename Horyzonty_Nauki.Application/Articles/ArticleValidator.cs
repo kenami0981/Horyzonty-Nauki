@@ -8,9 +8,9 @@ using MediatR;
 
 namespace Horyzonty_Nauki.Application.Articles
 {
-    public class ArticlesValidator: AbstractValidator<ArticlesCreateDto>
+    public class ArticleValidator: AbstractValidator<ArticleCreateDto>
     {
-        public ArticlesValidator()
+        public ArticleValidator()
         {
             RuleFor(article => article.Title)
                 .NotEmpty().WithMessage("Title is required.")

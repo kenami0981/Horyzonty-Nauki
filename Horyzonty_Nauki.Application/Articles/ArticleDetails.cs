@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Horyzonty_Nauki.Application.Article
 {
-    public class ArticlesDetails
+    public class ArticleDetails
     {
         public class Query : IRequest<Result<ArticleDto>>
         {

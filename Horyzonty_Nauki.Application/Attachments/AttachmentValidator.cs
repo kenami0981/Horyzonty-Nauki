@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Horyzonty_Nauki.Application.Attachments
 {
-    public class AttachmentsValidator : AbstractValidator<AttachmentsCreateDto>
+    public class AttachmentValidator : AbstractValidator<AttachmentCreateDto>
     {
-        public AttachmentsValidator() { 
+        public AttachmentValidator() { 
             RuleFor(attachment => attachment.Id)
                 .NotEmpty().WithMessage("Attachment ID is required.");
             RuleFor(attachment => attachment.Id_Article)

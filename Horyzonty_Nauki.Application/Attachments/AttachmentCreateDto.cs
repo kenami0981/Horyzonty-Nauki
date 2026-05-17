@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Horyzonty_Nauki.Application.Attachments
 {
-    public class AttachmentsCreateDto
+    public class AttachmentCreateDto
     {
         public Guid Id { get; set; }
 

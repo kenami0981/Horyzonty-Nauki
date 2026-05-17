@@ -32,9 +32,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //Dodanie MediatR
 builder.Services.AddMediatR(cfg =>
-cfg.RegisterServicesFromAssembly(typeof(ArticlesList.Handler).Assembly));
+cfg.RegisterServicesFromAssembly(typeof(ArticleList.Handler).Assembly));
 builder.Services.AddMediatR(cfg =>
-cfg.RegisterServicesFromAssembly(typeof(ArticlesDetails.Handler).Assembly));
+cfg.RegisterServicesFromAssembly(typeof(ArticleDetails.Handler).Assembly));
 
 
 builder.Services.AddControllers().AddJsonOptions(x => {
