@@ -32,7 +32,7 @@ namespace Horyzonty_Nauki.API.Controllers
             return Ok(articles);
 
         }
-        [HttpGet("{id}")] //api/article/{id}
+        [HttpGet("{id}")] 
         public async Task<ActionResult<ArticleDto>> GetArticle(Guid id)
         {
             var result = await _mediator.Send(new ArticlesDetails.Query { Id = id });
@@ -52,7 +52,7 @@ namespace Horyzonty_Nauki.API.Controllers
         }
 
         //[Authorize(Roles = "Admin")]
-        [HttpPut("{id}")] //api/article/id z ciałem JSON obiektu Article
+        [HttpPut("{id}")] 
         public async Task<IActionResult> EditArticle(Guid id, ArticlesCreateDto article)
         {
             var command = new ArticlesEdit.Command
@@ -74,7 +74,7 @@ namespace Horyzonty_Nauki.API.Controllers
         }
 
         //[Authorize(Roles = "Admin")]
-        [HttpPost] //api/article
+        [HttpPost] 
         public async Task<ActionResult> CreateArticle(ArticlesCreateDto article)
         {
             var result = await _mediator.Send(new ArticlesCreate.Command { ArticlesCreateDto = article });
@@ -89,7 +89,7 @@ namespace Horyzonty_Nauki.API.Controllers
             return BadRequest(result.ErrorMessage);
         }
         //[Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")] //api/articles/id
+        [HttpDelete("{id}")] 
         public async Task<IActionResult> DeleteArticle(Guid id)
         {
             var result = await _mediator.Send(new ArticlesDelete.Command { Id = id });

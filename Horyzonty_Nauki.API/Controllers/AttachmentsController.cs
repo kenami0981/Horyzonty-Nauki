@@ -30,8 +30,8 @@ namespace Horyzonty_Nauki.API.Controllers
 
         }
 
-        [HttpGet("{id}")] //api/attachment/{id}
-        public async Task<ActionResult<AttachmentDto>> GetArticle(Guid id)
+        [HttpGet("{id}")] 
+        public async Task<ActionResult<AttachmentDto>> GetAttachment(Guid id)
         {
             var result = await _mediator.Send(new AttachmentsDetails.Query { Id = id });
 
@@ -48,5 +48,58 @@ namespace Horyzonty_Nauki.API.Controllers
             return BadRequest(result.ErrorMessage);
 
         }
+        //[Authorize(Roles = "Admin")]
+        [HttpPut("{id}")] 
+        public async Task<IActionResult> EditAttachment(Guid id, AttachmentsCreateDto attachment)
+        {
+            var command = new AttachmentsEdit.Command
+            {
+                Id = id,
+                AttachmentsCreateDto = attachment
+            };
+
+            var result = await _mediator.Send(command);
+
+            if (result == null) return NotFound();
+
+            if (result.IsSuccess)
+            {
+                return Ok();
+            }
+
+            return BadRequest(result.ErrorMessage);
+        }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpPost] 
+        public async Task<ActionResult> CreateAttachment(AttachmentsCreateDto attachment)
+        {
+            var result = await _mediator.Send(new AttachmentsCreate.Command { AttachmentsCreateDto = attachment });
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            if (result.IsSuccess && result.Value != null)
+            {
+                return CreatedAtAction(nameof(GetAttachment), new { id = result.Value.Id }, result.Value);
+            }
+            return BadRequest(result.ErrorMessage);
+        }
+        //[Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")] 
+        public async Task<IActionResult> DeleteAttachment(Guid id)
+        {
+            var result = await _mediator.Send(new AttachmentsDelete.Command { Id = id });
+            if (result == null)
+            {
+                return NotFound();
+            }
+            if (result.IsSuccess)
+            {
+                return NoContent();
+            }
+            return BadRequest(result.ErrorMessage);
+        }
+
     }
 }

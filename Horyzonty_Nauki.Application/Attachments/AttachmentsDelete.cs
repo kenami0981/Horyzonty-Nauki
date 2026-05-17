@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Horyzonty_Nauki.Application.Articles
+namespace Horyzonty_Nauki.Application.Attachments
 {
-    public class ArticlesDelete
+    public class AttachmentsDelete
     {
         public class Command : IRequest<Result<Unit>>
         {
@@ -23,16 +23,16 @@ namespace Horyzonty_Nauki.Application.Articles
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var article = await _context.Articles.FindAsync(request.Id);
-                if (article== null)
+                var attachment= await _context.Attachments.FindAsync(request.Id);
+                if (attachment== null)
                 {
-                    return Result<Unit>.Failure("Article not found");
+                    return Result<Unit>.Failure("Attachment not found");
                 }
-                _context.Articles.Remove(article);
+                _context.Attachments.Remove(attachment);
                 var success = await _context.SaveChangesAsync(cancellationToken) > 0;
                 if (!success)
                 {
-                    return Result<Unit>.Failure("Failed to delete the article");
+                    return Result<Unit>.Failure("Failed to delete the attachment");
                 }
                 return Result<Unit>.Success(Unit.Value);
             }
