@@ -88,7 +88,21 @@ namespace Horyzonty_Nauki.API.Controllers
             }
             return BadRequest(result.ErrorMessage);
         }
-
+        //[Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")] //api/articles/id
+        public async Task<IActionResult> DeleteArticle(Guid id)
+        {
+            var result = await _mediator.Send(new ArticlesDelete.Command { Id = id });
+            if (result == null)
+            {
+                return NotFound();
+            }
+            if (result.IsSuccess)
+            {
+                return NoContent();
+            }
+            return BadRequest(result.ErrorMessage);
+        }
 
     }
 }
