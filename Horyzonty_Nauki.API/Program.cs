@@ -1,3 +1,4 @@
+using Horyzonty_Nauki.Application.Articles;
 using Horyzonty_Nauki.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +28,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//Dodanie MediatR
+builder.Services.AddMediatR(cfg =>
+cfg.RegisterServicesFromAssembly(typeof(ArticlesList.Handler).Assembly));
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
@@ -41,6 +45,8 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
     await Seed.SeedData(db);
 }
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

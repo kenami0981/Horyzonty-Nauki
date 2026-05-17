@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Horyzonty_Nauki.Domain\Horyzonty_Nauki.Domain.csproj" />
     <ProjectReference Include="..\Horyzonty_Nauki.Infrastructure\Horyzonty_Nauki.Infrastructure.csproj" />
   </ItemGroup>
