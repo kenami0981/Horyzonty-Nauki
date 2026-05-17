@@ -1,11 +1,14 @@
-﻿using Newtonsoft.Json.Converters;
-using System.Text.Json.Serialization;
+﻿using Horyzonty_Nauki.Domain;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MediatR;
 
-namespace Horyzonty_Nauki.Domain
+namespace Horyzonty_Nauki.Application.Articles
 {
-    //[JsonConverter(typeof(StringEnumConverter))]
-    public enum Category {M,C,D,P}
-    public class Article
+    public class ArticlesCreateDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -16,6 +19,5 @@ namespace Horyzonty_Nauki.Domain
 
         public int OpenCount { get; set; } = 0;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
     }
 }

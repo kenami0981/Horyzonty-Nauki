@@ -1,6 +1,8 @@
+using Horyzonty_Nauki.Application.Article;
 using Horyzonty_Nauki.Application.Articles;
 using Horyzonty_Nauki.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DataContext>(options =>
@@ -31,6 +33,14 @@ builder.Services.AddSwaggerGen();
 //Dodanie MediatR
 builder.Services.AddMediatR(cfg =>
 cfg.RegisterServicesFromAssembly(typeof(ArticlesList.Handler).Assembly));
+builder.Services.AddMediatR(cfg =>
+cfg.RegisterServicesFromAssembly(typeof(ArticlesDetails.Handler).Assembly));
+
+
+builder.Services.AddControllers().AddJsonOptions(x => {
+    // serialize enums as strings in api responses (e.g. Role)
+    x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())

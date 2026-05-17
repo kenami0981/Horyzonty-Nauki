@@ -25,7 +25,17 @@ namespace Horyzonty_Nauki.Infrastructure.Data
                 CreatedAt = DateTime.UtcNow
             };
 
+            var attachment = new Attachment
+            {
+                Id = Guid.NewGuid(),
+                Id_Article = article.Id,
+                File_name= "test.pdf",
+                File_type = "application/pdf",
+                File_size= 1024,
+            };
+
             context.Articles.Add(article);
+            context.Attachments.Add(attachment);
             await context.SaveChangesAsync();
         }
     }

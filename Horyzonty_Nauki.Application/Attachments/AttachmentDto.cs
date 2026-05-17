@@ -1,14 +1,16 @@
-﻿
-
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Horyzonty_Nauki.Domain
+namespace Horyzonty_Nauki.Application.Attachments
 {
-    public class Attachment
+    public class AttachmentDto
     {
         public Guid Id { get; set; }
 
-        [ForeignKey("Article")]
         public Guid Id_Article { get; set; }
 
         public string File_name { get; set; }

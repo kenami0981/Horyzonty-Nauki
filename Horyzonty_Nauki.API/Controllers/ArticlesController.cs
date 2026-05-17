@@ -4,6 +4,7 @@ using Horyzonty_Nauki.Application.Articles;
 using Horyzonty_Nauki.Domain;
 using Horyzonty_Nauki.Infrastructure.Data;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,7 @@ namespace Horyzonty_Nauki.API.Controllers
             return Ok(articles);
 
         }
-        [HttpGet("{id}")] //api/books/{id}
+        [HttpGet("{id}")] //api/article/{id}
         public async Task<ActionResult<ArticleDto>> GetArticle(Guid id)
         {
             var result = await _mediator.Send(new ArticlesDetails.Query { Id = id });
@@ -49,5 +50,45 @@ namespace Horyzonty_Nauki.API.Controllers
             return BadRequest(result.ErrorMessage);
 
         }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpPut("{id}")] //api/article/id z ciałem JSON obiektu Article
+        public async Task<IActionResult> EditArticle(Guid id, ArticlesCreateDto article)
+        {
+            var command = new ArticlesEdit.Command
+            {
+                Id = id,
+                ArticlesCreateDto = article
+            };
+
+            var result = await _mediator.Send(command);
+
+            if (result == null) return NotFound();
+
+            if (result.IsSuccess)
+            {
+                return Ok();
+            }
+
+            return BadRequest(result.ErrorMessage);
+        }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpPost] //api/article
+        public async Task<ActionResult> CreateArticle(ArticlesCreateDto article)
+        {
+            var result = await _mediator.Send(new ArticlesCreate.Command { ArticlesCreateDto = article });
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            if (result.IsSuccess && result.Value != null)
+            {
+                return CreatedAtAction(nameof(GetArticle), new { id = result.Value.Id }, result.Value);
+            }
+            return BadRequest(result.ErrorMessage);
+        }
+
+
     }
 }
