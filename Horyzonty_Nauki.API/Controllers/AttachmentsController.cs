@@ -19,7 +19,7 @@ namespace Horyzonty_Nauki.API.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<List<Article>>> GetAll()
+        public async Task<ActionResult<List<Attachment>>> GetAll()
         {
 
             var attachments = await _mediator.Send(new AttachmentsList.Query());
