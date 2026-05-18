@@ -48,7 +48,7 @@ namespace Horyzonty_Nauki.API.Controllers
         }
         //[Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditConfig(Guid id,Horyzonty_Nauki.Application.Configs.ConfigCreateDto config)
+        public async Task<IActionResult> EditConfig(Guid id,ConfigCreateDto config)
         {
             var command = new ConfigEdit.Command
             {
@@ -70,7 +70,7 @@ namespace Horyzonty_Nauki.API.Controllers
 
         //[Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<ActionResult> CreateConfig(Horyzonty_Nauki.Application.Configs.ConfigCreateDto config)
+        public async Task<ActionResult> CreateConfig(ConfigCreateDto config)
         {
             var result = await _mediator.Send(new ConfigCreate.Command { ConfigsCreateDto = config });
             if (result == null)
