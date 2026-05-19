@@ -36,6 +36,7 @@ cfg.RegisterServicesFromAssembly(typeof(ArticleList.Handler).Assembly));
 builder.Services.AddMediatR(cfg =>
 cfg.RegisterServicesFromAssembly(typeof(ArticleDetails.Handler).Assembly));
 
+builder.Services.AddScoped<TokenGenerator>();
 
 builder.Services.AddControllers().AddJsonOptions(x => {
     // serialize enums as strings in api responses (e.g. Role)

@@ -1,9 +1,4 @@
 ﻿using Horyzonty_Nauki.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Horyzonty_Nauki.Infrastructure.Data
 {
@@ -11,32 +6,68 @@ namespace Horyzonty_Nauki.Infrastructure.Data
     {
         public static async Task SeedData(DataContext context)
         {
-            if (context.Articles.Any()) return;
+            bool changed = false;
 
-            var article = new Article
+            if (!context.Articles.Any())
             {
-                Id = Guid.NewGuid(),
-                Title = "Pierwszy artykuł testowy",
-                Author = "Jan Kowalski",
-                Pages = 10,
-                PublicationDate = DateTime.UtcNow,
-                Category = Category.M,
-                OpenCount = 15,
-                CreatedAt = DateTime.UtcNow
-            };
+                var article = new Article
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Pierwszy artykuł testowy",
+                    Author = "Jan Kowalski",
+                    Pages = 10,
+                    PublicationDate = DateTime.UtcNow,
+                    Category = Category.M,
+                    OpenCount = 15,
+                    CreatedAt = DateTime.UtcNow
+                };
 
-            var attachment = new Attachment
+                var attachment = new Attachment
+                {
+                    Id = Guid.NewGuid(),
+                    Id_Article = article.Id,
+                    File_name = "test.pdf",
+                    File_type = "application/pdf",
+                    File_size = 1024,
+                    File_path = "examplePath",
+                };
+
+                context.Articles.Add(article);
+                context.Attachments.Add(attachment);
+                changed = true;
+            }
+
+            if (!context.Administrators.Any())
             {
-                Id = Guid.NewGuid(),
-                Id_Article = article.Id,
-                File_name= "test.pdf",
-                File_type = "application/pdf",
-                File_size= 1024,
-            };
+                var administrator = new Administrator
+                {
+                    Id = Guid.NewGuid(),
+                    Login = "Testowy",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Administrator"),
+                    Email = "example@ex.com",
+                };
 
-            context.Articles.Add(article);
-            context.Attachments.Add(attachment);
-            await context.SaveChangesAsync();
+                context.Administrators.Add(administrator);
+                changed = true;
+            }
+
+            if (!context.Configs.Any())
+            {
+                var config = new Config
+                {
+                    Id = Guid.NewGuid(),
+                    Issn_number = 23153872,
+                    Logo_path = "examplePath"
+                };
+
+                context.Configs.Add(config);
+                changed = true;
+            }
+
+            if (changed)
+            {
+                await context.SaveChangesAsync();
+            }
         }
     }
 }
