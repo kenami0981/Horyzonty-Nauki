@@ -46,58 +46,6 @@ namespace Horyzonty_Nauki.API.Controllers
             return BadRequest(result.ErrorMessage);
 
         }
-        //[Authorize(Roles = "Admin")]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditConfig(Guid id,ConfigCreateDto config)
-        {
-            var command = new ConfigEdit.Command
-            {
-                Id = id,
-                ConfigsCreateDto = config
-            };
-
-            var result = await _mediator.Send(command);
-
-            if (result == null) return NotFound();
-
-            if (result.IsSuccess)
-            {
-                return Ok();
-            }
-
-            return BadRequest(result.ErrorMessage);
-        }
-
-        //[Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<ActionResult> CreateConfig(ConfigCreateDto config)
-        {
-            var result = await _mediator.Send(new ConfigCreate.Command { ConfigsCreateDto = config });
-            if (result == null)
-            {
-                return BadRequest();
-            }
-            if (result.IsSuccess && result.Value != null)
-            {
-                return CreatedAtAction(nameof(GetConfig), new { id = result.Value.Id }, result.Value);
-            }
-            return BadRequest(result.ErrorMessage);
-        }
-
-        //[Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteConfig(Guid id)
-        {
-            var result = await _mediator.Send(new ConfigDelete.Command { Id = id });
-            if (result == null)
-            {
-                return NotFound();
-            }
-            if (result.IsSuccess)
-            {
-                return NoContent();
-            }
-            return BadRequest(result.ErrorMessage);
-        }
+       
     }
 }
