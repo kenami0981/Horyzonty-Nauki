@@ -23,14 +23,14 @@ namespace Horyzonty_Nauki.Infrastructure.Data
                 new Claim(ClaimTypes.Name, admin.Email),
                 new Claim(ClaimTypes.Role, "Admin")
             };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("F3x9!kL8@zQ2#pW7$uN5^rT1&vB6*eY9!mC4@xZ8"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 issuer: "Horyzonty_Nauki",
                 audience: "Horyzonty_Nauki",
                 claims: claims,
-                expires: DateTime.Now.AddHours(0.5),
+                expires: DateTime.UtcNow.AddMinutes(25),
                 signingCredentials: creds
             );
 

@@ -1,13 +1,9 @@
-﻿using Horyzonty_Nauki.Application;
-using Horyzonty_Nauki.Application.Article;
+﻿using Horyzonty_Nauki.Application.Article;
 using Horyzonty_Nauki.Application.Articles;
 using Horyzonty_Nauki.Domain;
-using Horyzonty_Nauki.Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Horyzonty_Nauki.API.Controllers
 {
@@ -51,7 +47,7 @@ namespace Horyzonty_Nauki.API.Controllers
 
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")] 
         public async Task<IActionResult> EditArticle(Guid id, ArticleCreateDto article)
         {
@@ -73,7 +69,7 @@ namespace Horyzonty_Nauki.API.Controllers
             return BadRequest(result.ErrorMessage);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost] 
         public async Task<ActionResult> CreateArticle(ArticleCreateDto article)
         {
@@ -88,7 +84,7 @@ namespace Horyzonty_Nauki.API.Controllers
             }
             return BadRequest(result.ErrorMessage);
         }
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")] 
         public async Task<IActionResult> DeleteArticle(Guid id)
         {

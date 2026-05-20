@@ -1,10 +1,8 @@
-﻿
-using Horyzonty_Nauki.Application.Configs;
+﻿using Horyzonty_Nauki.Application.Configs;
 using Horyzonty_Nauki.Domain;
-using Horyzonty_Nauki.Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Horyzonty_Nauki.API.Controllers
 {
@@ -46,7 +44,7 @@ namespace Horyzonty_Nauki.API.Controllers
             return BadRequest(result.ErrorMessage);
 
         }
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> EditConfig(Guid id,ConfigCreateDto config)
         {
@@ -68,7 +66,7 @@ namespace Horyzonty_Nauki.API.Controllers
             return BadRequest(result.ErrorMessage);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult> CreateConfig(ConfigCreateDto config)
         {
@@ -84,7 +82,7 @@ namespace Horyzonty_Nauki.API.Controllers
             return BadRequest(result.ErrorMessage);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConfig(Guid id)
         {

@@ -1,11 +1,8 @@
-﻿using Horyzonty_Nauki.Application.Article;
-using Horyzonty_Nauki.Application.Articles;
-using Horyzonty_Nauki.Application.Attachments;
+﻿using Horyzonty_Nauki.Application.Attachments;
 using Horyzonty_Nauki.Domain;
-using Horyzonty_Nauki.Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Horyzonty_Nauki.API.Controllers
 {
@@ -48,7 +45,7 @@ namespace Horyzonty_Nauki.API.Controllers
             return BadRequest(result.ErrorMessage);
 
         }
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")] 
         public async Task<IActionResult> EditAttachment(Guid id, AttachmentCreateDto attachment)
         {
@@ -70,7 +67,7 @@ namespace Horyzonty_Nauki.API.Controllers
             return BadRequest(result.ErrorMessage);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost] 
         public async Task<ActionResult> CreateAttachment(AttachmentCreateDto attachment)
         {
@@ -85,7 +82,7 @@ namespace Horyzonty_Nauki.API.Controllers
             }
             return BadRequest(result.ErrorMessage);
         }
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")] 
         public async Task<IActionResult> DeleteAttachment(Guid id)
         {
