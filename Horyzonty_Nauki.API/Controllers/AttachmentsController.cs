@@ -3,6 +3,8 @@ using Horyzonty_Nauki.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Horyzonty_Nauki.Application.Articles;
 
 namespace Horyzonty_Nauki.API.Controllers
 {
@@ -96,6 +98,19 @@ namespace Horyzonty_Nauki.API.Controllers
                 return NoContent();
             }
             return BadRequest(result.ErrorMessage);
+        }
+        [HttpPost("{id}/open")]
+        public async Task<IActionResult> IncreaseOpenCount(Guid id)
+        {
+            var result = await _mediator.Send(new ArticleIncreaseOpenCount.Command
+            {
+                Id = id
+            });
+
+            if (result.IsSuccess)
+                return Ok();
+
+            return NotFound(result.ErrorMessage);
         }
 
     }

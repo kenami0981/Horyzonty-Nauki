@@ -62,3 +62,5 @@ nunit-*.xml
 
 # Windows crash dumps
 *.dmp
+
+Horyzonty_Nauki.API/appsettings.json

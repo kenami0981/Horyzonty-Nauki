@@ -38,7 +38,11 @@ namespace Horyzonty_Nauki.Application.Article
                         PublicationDate = b.PublicationDate,
                         Category = b.Category,
                         OpenCount = b.OpenCount,
-                        CreatedAt = b.CreatedAt
+                        CreatedAt = b.CreatedAt,
+                        PdfUrl = _context.Attachments
+    .Where(x => x.Id_Article == b.Id)
+    .Select(x => x.File_path)
+    .FirstOrDefault()
                     })
                     .FirstOrDefaultAsync(cancellationToken);
 

@@ -18,5 +18,6 @@ namespace Horyzonty_Nauki.Application.Articles
 
         public int OpenCount { get; set; } = 0;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public string PdfUrl { get; set; }
     }
 }

@@ -122,7 +122,7 @@ app.UseCors("ReactPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseStaticFiles();
 app.MapControllers();
 
 app.Run();
