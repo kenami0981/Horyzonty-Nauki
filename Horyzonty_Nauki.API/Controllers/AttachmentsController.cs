@@ -3,6 +3,8 @@ using Horyzonty_Nauki.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Horyzonty_Nauki.Application.Articles;
 
 namespace Horyzonty_Nauki.API.Controllers
 {
@@ -45,5 +47,71 @@ namespace Horyzonty_Nauki.API.Controllers
             return BadRequest(result.ErrorMessage);
 
         }
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}")] 
+        public async Task<IActionResult> EditAttachment(Guid id, AttachmentCreateDto attachment)
+        {
+            var command = new AttachmentEdit.Command
+            {
+                Id = id,
+                AttachmentsCreateDto = attachment
+            };
+
+            var result = await _mediator.Send(command);
+
+            if (result == null) return NotFound();
+
+            if (result.IsSuccess)
+            {
+                return Ok();
+            }
+
+            return BadRequest(result.ErrorMessage);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost] 
+        public async Task<ActionResult> CreateAttachment(AttachmentCreateDto attachment)
+        {
+            var result = await _mediator.Send(new AttachmentCreate.Command { AttachmentsCreateDto = attachment });
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            if (result.IsSuccess && result.Value != null)
+            {
+                return CreatedAtAction(nameof(GetAttachment), new { id = result.Value.Id }, result.Value);
+            }
+            return BadRequest(result.ErrorMessage);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")] 
+        public async Task<IActionResult> DeleteAttachment(Guid id)
+        {
+            var result = await _mediator.Send(new AttachmentDelete.Command { Id = id });
+            if (result == null)
+            {
+                return NotFound();
+            }
+            if (result.IsSuccess)
+            {
+                return NoContent();
+            }
+            return BadRequest(result.ErrorMessage);
+        }
+        [HttpPost("{id}/open")]
+        public async Task<IActionResult> IncreaseOpenCount(Guid id)
+        {
+            var result = await _mediator.Send(new ArticleIncreaseOpenCount.Command
+            {
+                Id = id
+            });
+
+            if (result.IsSuccess)
+                return Ok();
+
+            return NotFound(result.ErrorMessage);
+        }
+
     }
 }

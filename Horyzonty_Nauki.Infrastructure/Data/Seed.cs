@@ -19,6 +19,8 @@ namespace Horyzonty_Nauki.Infrastructure.Data
                     PublicationDate = DateTime.UtcNow,
                     Category = Category.M,
                     OpenCount = 15,
+                    CreatedAt = DateTime.UtcNow,
+                    
                 };
 
                 var attachment = new Attachment
@@ -28,7 +30,7 @@ namespace Horyzonty_Nauki.Infrastructure.Data
                     File_name = "test.pdf",
                     File_type = "application/pdf",
                     File_size = 1024,
-                    File_path = "examplePath",
+                    File_path = "test.pdf",
                 };
 
                 context.Articles.Add(article);
