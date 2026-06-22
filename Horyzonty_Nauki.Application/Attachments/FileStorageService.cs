@@ -17,12 +17,11 @@ public class FileStorageService : IFileStorageService
 
     public async Task<StoredFile> SaveAsync(
         IFormFile file,
+        string filePath,
         CancellationToken ct)
     {
-        // 1. pełna ścieżka pliku
-        var fullPath = Path.Combine(_basePath, file.FileName);
+        var fullPath = Path.Combine(_basePath, filePath);
 
-        // 2. zapis pliku na dysk
         await using var stream = new FileStream(
             fullPath,
             FileMode.Create,
@@ -30,17 +29,16 @@ public class FileStorageService : IFileStorageService
 
         await file.CopyToAsync(stream, ct);
 
-        // 3. zwrócenie informacji o pliku
         return new StoredFile
         {
             FileName = file.FileName,
-            FilePath = fullPath,
+            FilePath = filePath,
             ContentType = file.ContentType,
             FileSize = file.Length
         };
     }
 
-    public Task DeleteAsync(string filePath, CancellationToken ct)
+    public Task DeleteAsync(string filePath)
     {
         if (File.Exists(filePath))
         {
@@ -48,5 +46,32 @@ public class FileStorageService : IFileStorageService
         }
 
         return Task.CompletedTask;
+    }
+
+    public Task<StoredFileResponse?> GetAsync(
+        string filePath)
+    {
+        var fullPath =
+            Path.Combine(_basePath, filePath);
+
+        if (!File.Exists(fullPath))
+        {
+            return Task.FromResult<StoredFileResponse?>(null);
+        }
+
+        var stream = new FileStream(
+            fullPath,
+            FileMode.Open,
+            FileAccess.Read,
+            FileShare.Read);
+
+        var result = new StoredFileResponse
+        {
+            Content = stream,
+            FileName = Path.GetFileName(fullPath),
+            ContentType = "application/pdf"
+        };
+
+        return Task.FromResult<StoredFileResponse?>(result);
     }
 }

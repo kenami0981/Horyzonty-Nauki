@@ -47,9 +47,38 @@ namespace Horyzonty_Nauki.API.Controllers
             return BadRequest(result.ErrorMessage);
 
         }
+        /*
+        [HttpGet("{id}")]
+            public async Task<IActionResult> DownloadArticle(
+                Guid id)
+            {
+                var attachment = await _context.Attachments
+                    .FirstOrDefaultAsync(
+                        x => x.Id_Article == id);
+
+                if (attachment == null)
+                {
+                    return NotFound();
+                }
+
+                var file =
+                    await _fileStorageService.GetAsync(
+                        attachment.File_path);
+
+                if (file == null)
+                {
+                    return NotFound();
+                }
+
+                return File(
+                    file.Content,
+                    file.ContentType,
+                    file.FileName);
+            }
+         */
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")] 
-        public async Task<IActionResult> EditAttachment(Guid id, AttachmentCreateDto attachment)
+        public async Task<IActionResult> EditAttachment(Guid id, AttachmentDto attachment)
         {
             var command = new AttachmentEdit.Command
             {
@@ -71,7 +100,7 @@ namespace Horyzonty_Nauki.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost] 
-        public async Task<ActionResult> CreateAttachment(AttachmentCreateDto attachment)
+        public async Task<ActionResult> CreateAttachment(AttachmentDto attachment)
         {
             var result = await _mediator.Send(new AttachmentCreate.Command { AttachmentsCreateDto = attachment });
             if (result == null)

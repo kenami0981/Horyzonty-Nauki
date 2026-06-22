@@ -24,8 +24,6 @@ namespace Horyzonty_Nauki.Application.Articles
         public int OpenCount { get; set; } = 0;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string PdfUrl { get; set; }
-        public int OpenCount { get; set; }
-
         public List<string> Keywords { get; set; } = [];
 
         public IFormFile ArticleFile { get; set; } = null!;

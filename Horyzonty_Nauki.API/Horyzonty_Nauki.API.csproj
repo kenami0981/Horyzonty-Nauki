@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Horyzonty_Nauki.Infrastructure\Horyzonty_Nauki.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Uploads\" />
+  </ItemGroup>
+
 </Project>

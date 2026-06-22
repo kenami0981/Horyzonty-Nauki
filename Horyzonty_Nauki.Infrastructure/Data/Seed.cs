@@ -20,7 +20,6 @@ namespace Horyzonty_Nauki.Infrastructure.Data
                     Category = Category.M,
                     OpenCount = 15,
                     CreatedAt = DateTime.UtcNow,
-                    
                 };
 
                 var attachment = new Attachment

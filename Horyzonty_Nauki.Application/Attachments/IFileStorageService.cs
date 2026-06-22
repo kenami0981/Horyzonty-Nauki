@@ -9,8 +9,10 @@ namespace Horyzonty_Nauki.Application.Attachments
 {
     public interface IFileStorageService
     {
-        Task<StoredFile> SaveAsync(IFormFile file, CancellationToken ct);
+        Task<StoredFile> SaveAsync(IFormFile file, string filePath, CancellationToken ct);
 
-        Task DeleteAsync(string filePath, CancellationToken ct);
+        Task DeleteAsync(string filePath);
+
+        Task<StoredFileResponse?> GetAsync(string filePath);
     }
 }

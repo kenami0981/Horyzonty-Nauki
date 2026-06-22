@@ -3,6 +3,7 @@ using Horyzonty_Nauki.Application.Attachments;
 using Horyzonty_Nauki.Domain;
 using Horyzonty_Nauki.Infrastructure.Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Horyzonty_Nauki.Application.Articles
 {
@@ -39,7 +40,6 @@ namespace Horyzonty_Nauki.Application.Articles
             {
                 var dto = request.ArticleCreateDto;
 
-                // 1. CREATE ARTICLE
                 var article = new Domain.Article
                 {
                     Id = Guid.NewGuid(),
@@ -48,13 +48,21 @@ namespace Horyzonty_Nauki.Application.Articles
                     Pages = dto.Pages,
                     PublicationDate = dto.PublicationDate,
                     Category = dto.Category,
-                    OpenCount = 0
+                    OpenCount = 0,
+                    CreatedAt = DateTime.UtcNow
                 };
 
                 _context.Articles.Add(article);
 
-                // 2. SAVE ARTICLE FILE
-                var mainFile = await _storageService.SaveAsync(dto.ArticleFile, cancellationToken);
+                var count = await _context.Articles
+                    .CountAsync(
+                        a => a.PublicationDate.Year == dto.PublicationDate.Year,
+                        cancellationToken
+                    );
+                string text = (count + 1).ToString("D3");
+                string filePath = dto.Category.ToString() + "-" + dto.PublicationDate.ToString("yy") + "-" + text;
+
+                var mainFile = await _storageService.SaveAsync(dto.ArticleFile, filePath + ".pdf", cancellationToken);
 
                 _context.Attachments.Add(new Attachment
                 {
@@ -66,10 +74,9 @@ namespace Horyzonty_Nauki.Application.Articles
                     File_path = mainFile.FilePath
                 });
 
-                // 3. OPTIONAL FILE
                 if (dto.OptionalFile != null)
                 {
-                    var optFile = await _storageService.SaveAsync(dto.OptionalFile, cancellationToken);
+                    var optFile = await _storageService.SaveAsync(dto.OptionalFile, filePath + "_optional" + dto.OptionalFile.ContentType, cancellationToken);
 
                     _context.Attachments.Add(new Attachment
                     {
@@ -82,13 +89,11 @@ namespace Horyzonty_Nauki.Application.Articles
                     });
                 }
 
-                // 4. SAVE DB
                 var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                 if (!success)
-                    return Result<ArticleDto>.Failure("Failed");
+                    return Result<ArticleDto>.Failure("Failed to save an article");
 
-                // 5. RESPONSE
                 var result = new ArticleDto
                 {
                     Id = article.Id,
