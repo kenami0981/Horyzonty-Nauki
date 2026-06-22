@@ -19,7 +19,6 @@ namespace Horyzonty_Nauki.Infrastructure.Data
                     PublicationDate = DateTime.UtcNow,
                     Category = Category.M,
                     OpenCount = 15,
-                    CreatedAt = DateTime.UtcNow
                 };
 
                 var attachment = new Attachment
@@ -46,8 +45,16 @@ namespace Horyzonty_Nauki.Infrastructure.Data
                     Password = BCrypt.Net.BCrypt.HashPassword("Administrator"),
                     Email = "example@ex.com",
                 };
+                var anotherAdministrator = new Administrator
+                {
+                    Id = Guid.NewGuid(),
+                    Login = "Testowy2",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Administrator2"),
+                    Email = "example2@ex.com"
+                };
 
                 context.Administrators.Add(administrator);
+                context.Administrators.Add(anotherAdministrator);
                 changed = true;
             }
 

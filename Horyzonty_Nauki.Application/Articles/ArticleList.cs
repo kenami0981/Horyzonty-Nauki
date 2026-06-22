@@ -32,7 +32,6 @@ namespace Horyzonty_Nauki.Application.Articles
                         PublicationDate = b.PublicationDate,
                         Category = b.Category,
                         OpenCount = b.OpenCount,
-                        CreatedAt = b.CreatedAt
                     })
                     .ToListAsync(cancellationToken);
 

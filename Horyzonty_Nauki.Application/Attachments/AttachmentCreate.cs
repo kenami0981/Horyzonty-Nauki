@@ -14,7 +14,7 @@ namespace Horyzonty_Nauki.Application.Attachments
     {
         public class Command : IRequest<Result<AttachmentDto>>
         {
-            public required AttachmentCreateDto AttachmentsCreateDto { get; set; }
+            public required AttachmentDto AttachmentsCreateDto { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>

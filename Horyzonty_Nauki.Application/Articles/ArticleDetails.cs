@@ -37,8 +37,7 @@ namespace Horyzonty_Nauki.Application.Article
                         Pages = b.Pages,
                         PublicationDate = b.PublicationDate,
                         Category = b.Category,
-                        OpenCount = b.OpenCount,
-                        CreatedAt = b.CreatedAt
+                        OpenCount = b.OpenCount
                     })
                     .FirstOrDefaultAsync(cancellationToken);
 

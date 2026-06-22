@@ -71,9 +71,12 @@ namespace Horyzonty_Nauki.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost] 
-        public async Task<ActionResult> CreateArticle(ArticleCreateDto article)
+        public async Task<ActionResult> CreateArticle(
+            [FromForm] ArticleCreateDto article)
         {
-            var result = await _mediator.Send(new ArticleCreate.Command { ArticlesCreateDto = article });
+            Console.WriteLine(article);
+            var result = await _mediator.Send(new ArticleCreate.Command { ArticleCreateDto = article });
+            Console.WriteLine(result);
             if (result == null)
             {
                 return BadRequest();

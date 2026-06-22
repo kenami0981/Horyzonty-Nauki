@@ -49,8 +49,6 @@ namespace Horyzonty_Nauki.Application.Articles
                 article.PublicationDate = request.ArticlesCreateDto.PublicationDate;
                 article.Category = request.ArticlesCreateDto.Category;
                 article.OpenCount = request.ArticlesCreateDto.OpenCount;
-                article.CreatedAt = request.ArticlesCreateDto.CreatedAt;
-
 
                 var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 

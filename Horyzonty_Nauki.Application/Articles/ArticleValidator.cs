@@ -26,8 +26,6 @@ namespace Horyzonty_Nauki.Application.Articles
                 .IsInEnum().WithMessage("Category must be a valid value.");
             RuleFor(article => article.OpenCount)
                 .GreaterThanOrEqualTo(0).WithMessage("Open count cannot be negative.");
-            RuleFor(article => article.CreatedAt)
-                .LessThanOrEqualTo(DateTime.Now).WithMessage("Created date cannot be in the future.");
         }
     }
 }

@@ -1,9 +1,4 @@
 ﻿using Horyzonty_Nauki.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Horyzonty_Nauki.Application.Articles
 {
@@ -17,6 +12,5 @@ namespace Horyzonty_Nauki.Application.Articles
         public Category Category { get; set; }
 
         public int OpenCount { get; set; } = 0;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

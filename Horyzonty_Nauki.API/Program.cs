@@ -1,12 +1,13 @@
 using Horyzonty_Nauki.Application.Article;
 using Horyzonty_Nauki.Application.Articles;
+using Horyzonty_Nauki.Application.Attachments;
 using Horyzonty_Nauki.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +43,13 @@ builder.Services.AddMediatR(cfg =>
 cfg.RegisterServicesFromAssembly(typeof(ArticleDetails.Handler).Assembly));
 
 builder.Services.AddScoped<TokenGenerator>();
+builder.Services.AddScoped<IFileStorageService>(cfg =>
+{
+    var env = cfg.GetRequiredService<IWebHostEnvironment>();
+
+    return new FileStorageService(
+        Path.Combine(env.ContentRootPath, "Uploads"));
+});
 
 builder.Services.AddControllers().AddJsonOptions(x => {
     // serialize enums as strings in api responses (e.g. Role)

@@ -15,7 +15,5 @@ namespace Horyzonty_Nauki.Domain
         public Category Category { get; set; }
 
         public int OpenCount { get; set; } = 0;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
     }
 }

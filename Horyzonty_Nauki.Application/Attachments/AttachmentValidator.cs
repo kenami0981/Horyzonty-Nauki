@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Horyzonty_Nauki.Application.Attachments
 {
-    public class AttachmentValidator : AbstractValidator<AttachmentCreateDto>
+    public class AttachmentValidator : AbstractValidator<AttachmentDto>
     {
         public AttachmentValidator() { 
             RuleFor(attachment => attachment.Id)

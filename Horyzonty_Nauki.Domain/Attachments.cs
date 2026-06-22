@@ -14,7 +14,7 @@ namespace Horyzonty_Nauki.Domain
         public string File_name { get; set; }
         public string File_type { get; set; }
 
-        public int File_size { get; set; }
+        public long File_size { get; set; }
 
         public string File_path { get; set; }
     }
